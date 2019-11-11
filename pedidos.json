@@ -1,0 +1,70 @@
+[
+ {
+  "paraDelivery": true,
+  "direccionCliente": "3545",
+  "nombreCliente": "436543643",
+  "telefonoCliente": "6343634634",
+  "gustoPizza": "Muzza",
+  "tamanioPizza": "Grande",
+  "conBebida": true,
+  "gustoBebida": "Coca-cola",
+  "clienteHabitual": false,
+  "fecha": "2019-11-10",
+  "hora": "20:48:45",
+  "totalProductos": 620,
+  "descuento": 8
+ },
+ {
+  "paraDelivery": false,
+  "nombreCliente": "xime",
+  "telefonoCliente": "12343544",
+  "gustoPizza": "Calabresa",
+  "tamanioPizza": "Grande",
+  "conBebida": true,
+  "gustoBebida": "Coca-cola",
+  "clienteHabitual": false,
+  "fecha": "2019-11-10",
+  "hora": "20:49:07",
+  "totalProductos": 600,
+  "descuento": 8
+ },
+ {
+  "paraDelivery": true,
+  "direccionCliente": "fig ee",
+  "nombreCliente": "anabela",
+  "telefonoCliente": "123243432",
+  "gustoPizza": "Napo",
+  "tamanioPizza": "Mediana",
+  "conBebida": true,
+  "gustoBebida": "Pepsi",
+  "clienteHabitual": true,
+  "empanadas": [
+   "Pollo",
+   "Zapallito",
+   "Verdura"
+  ],
+  "fecha": "2019-11-10",
+  "hora": "22:26:15",
+  "totalProductos": 380,
+  "descuento": 5
+ },
+ {
+  "paraDelivery": false,
+  "nombreCliente": "bebe",
+  "telefonoCliente": "213432432",
+  "gustoPizza": "Fugazzeta",
+  "tamanioPizza": "Personal",
+  "conBebida": true,
+  "gustoBebida": "Pepsi",
+  "clienteHabitual": true,
+  "empanadas": [
+   "Carne",
+   "Pollo",
+   "Jamón y queso"
+  ],
+  "fecha": "2019-11-10",
+  "hora": "22:26:40",
+  "totalProductos": 209,
+  "descuento": 3
+ }
+]

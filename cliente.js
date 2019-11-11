@@ -1,8 +1,9 @@
 //console.log("Soy el archivo cliente.js");
 const inquirer = require('inquirer');
+const fs = require ('fs');
 
 //Preguntas
-var fehca = new Date();
+//var fehca = new Date();
 let preguntasDelivery =
 [
 	{
@@ -107,6 +108,10 @@ let preguntasDelivery =
 inquirer
 .prompt(preguntasDelivery)
 .then(function(respuestas){
+    let contenidoAgregado;
+    let fecha = new Date();
+    let fechaPedido = fecha.toLocaleDateString();
+    let horaPedido = fecha.toLocaleTimeString();
     //console.log(respuestas);
     //Reporte del pedido para la/el cliente
     console.log('----------------------------------------------------------------------------------------');
@@ -125,7 +130,7 @@ inquirer
     
 
     //Productos solicitados
-    let cantProd = 1;
+    let totalProd = 0;
     console.log('');    
     console.log('=== Productos solicitados ===');
     console.log('Pizza:  ' + respuestas.gustoPizza);
@@ -135,7 +140,7 @@ inquirer
     if(respuestas.conBebida){
         console.log('Bebida: ' + respuestas.gustoBebida);
         console.log('');
-        cantProd ++;
+       
         
     }
     if(respuestas.clienteHabitual){
@@ -144,7 +149,7 @@ inquirer
         console.log('Gusto empanada 2: ' + respuestas.empanadas[1]);
         console.log('Gusto empanada 3: ' + respuestas.empanadas[2]);
         console.log('');
-        cantProd = cantProd + 3;        
+               
     }
 
     //Calculos Precios
@@ -159,11 +164,13 @@ inquirer
 
     if(respuestas.conBebida){
         precio = precio + 80;
+        totalProd = precio;
     }
 
     switch(respuestas.tamanioPizza){
-        case 'Personal':{
+        case 'Personal':
             if(precio >= 80){
+                totalProd = totalProd + 430;
                 precio = precio + 430 * 0.3;
                 totalDescuento = 3;
             }            
@@ -171,9 +178,9 @@ inquirer
                 precio = precio + 430;
             }
             break;
-        }
-        case 'Mediana':{
+        case 'Mediana':
             if(precio >= 80){
+                totalProd = totalProd + 560;
                 precio = precio + 560 * 0.5;
                 totalDescuento = 5;
             }
@@ -181,9 +188,9 @@ inquirer
                 precio = precio + 560;
             }
             break;
-        }
-        case 'Grande':{
+        case 'Grande':
             if(precio >= 80){
+                totalProd = totalProd + 650;
                 precio = precio + 650 * 0.8;
                 totalDescuento = 8;
             }
@@ -191,19 +198,65 @@ inquirer
                 precio = precio + 650;
             }
             break;
-        }
     }
     
     //Mostrando precios
     console.log('===============================');
-    console.log('Total Productos: ' + cantProd);
+    console.log('Total Productos: ' + totalProd);
     console.log('Total delivery: ' + totalDelivery);
     console.log('Descuentos: ' + totalDescuento + '%');
     console.log('Total: ' + precio);
     console.log('===============================');
     console.log('');
     console.log('Gracias por comprar en DH Pizzas. Esperamos que disfrutes tu pedido');
+    console.log('');
+
+    //Agragamos la info adicional al obj literal respuestas
+    let infoAdcicional = {
+        fecha: fechaPedido,
+        hora: horaPedido,
+        totalProductos: precio,
+        descuento: totalDescuento
+    }        
+
+    respuestas = {
+        ...respuestas,
+        ...infoAdcicional
+    }
+    //console.log('\n\n\n');
+   // console.log(respuestas);
+
+   //Construcion del archivo json
+   const RUTADELARCHIVO = __dirname + '/pedidos.json';
+   
+   //leo el archivo para saber si tiene datos
+   let contenidoPedidos = fs.readFileSync(RUTADELARCHIVO, 'utf8');
+   let arrayPedidos = contenidoPedidos.length == 0 ? [] : JSON.parse(contenidoPedidos);
+   
+  
+   
+   arrayPedidos.push(respuestas);
+   fs.writeFileSync(RUTADELARCHIVO, JSON.stringify(arrayPedidos, null, ' ')); 
+
     
+   
+   /*
+   // Leo el archivo para saber si tiene algo
+	let infoArchivo = fs.readFileSync(rutaDelArchivo, 'utf8');
+
+	let arrayPedidos = infoArchivo.length == 0 ? [] : JSON.parse(infoArchivo);
+
+	// ¿como agregamos esto al objeto respuestas? con Spread Operator
+	respuestas = {
+		numeroPedido: arrayPedidos.length + 1,
+		...respuestas,
+		...dataAdicional,
+	};
+
+	arrayPedidos.push(respuestas);
+
+	fs.writeFileSync(rutaDelArchivo, JSON.stringify(arrayPedidos, null, ' '));
+   */ 
             
     
 });
